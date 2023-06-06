@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Health Helpdesk</title>
+</head>
+<body style="background-color:grey">
+<div >
+    <h1 style="color:gold">Welcome to the Health Helpdesk!</h1>
+    <form action="/chat" method="post">
+       <h3> <label for="condition">Select a Health Condition:</label></h3>
+        <select id="condition" name="condition">
+            <option value="cold">Cold</option>
+            <option value="fever">Fever</option>
+            <option value="headache">Headache</option>
+            <option value="stomach pain">stomach pain</option>
+            <option value ="cough">cough</option>
+            <!-- Add more condition options -->
+        </select>
+
+       <h3> <label for="severity">Select the Severity:</label></h3>
+        <select id="severity" name="severity">
+            <option value="mild">Mild</option>
+            <option value="moderate">Moderate</option>
+            <option value="severe">Severe</option>
+            <!-- Add more severity options -->
+        </select>
+
+        <button type="submit">Chat</button>
+    </form>
+
+    <div id="chat-output">
+
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $('form').submit(function (event) {
+            event.preventDefault();
+            var condition = $('#condition').val();
+            var severity = $('#severity').val();
+
+            $.ajax({
+                type: 'POST',
+                url: '/chat',
+                data: {condition: condition, severity: severity},
+                success: function (response) {
+                    $('#chat-output').append('<p>' + response + '</p>');
+                }
+            });
+        });
+    </script>
+    </div>
+</body>
+</html>
